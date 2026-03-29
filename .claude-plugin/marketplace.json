@@ -1,0 +1,22 @@
+{
+  "name": "website-conversion-audit",
+  "owner": {
+    "name": "Artemii Novoselov",
+    "email": "crimeacs@gmail.com"
+  },
+  "metadata": {
+    "description": "Find why your website gets traffic but no leads. Automated conversion diagnostics — broken CTAs, dead forms, missing pixels, copy-paste meta errors, mobile UX gaps.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "website-conversion-audit",
+      "description": "Comprehensive website conversion audit — crawls your live site, finds broken CTA buttons, dead forms, missing tracking pixels, copy-pasted meta tags, and mobile UX problems that kill leads. The revenue diagnostic that SEO tools miss.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/website-conversion-audit"
+      ]
+    }
+  ]
+}
