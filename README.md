@@ -75,7 +75,7 @@ No API keys needed. Works with any public website.
 
 ## Origin story
 
-Built from a real audit where a tour company had 452 monthly sessions but only 1 lead. We discovered 9 of 13 pages had broken CTA buttons from template duplication, zero tracking pixels, and copy-pasted descriptions from the wrong pages. The methodology was generalized into this skill.
+Built from a real audit where a ([tour company](https://thervescape.com/)) had 452 monthly sessions but only 1 lead. We discovered 9 of 13 pages had broken CTA buttons from template duplication, zero tracking pixels, and copy-pasted descriptions from the wrong pages. The methodology was generalized into this skill.
 
 ## Contributing
 
