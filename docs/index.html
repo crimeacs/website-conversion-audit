@@ -110,6 +110,39 @@ body {
   margin: 0 auto;
 }
 
+.install-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin: 4px 0;
+  cursor: pointer;
+  transition: background 0.15s;
+  position: relative;
+}
+
+.install-line:hover {
+  background: rgba(108,138,255,0.06);
+}
+
+.install-line .copy-btn {
+  opacity: 0;
+  flex-shrink: 0;
+  padding: 3px 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--dim);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.install-line:hover .copy-btn { opacity: 1; }
+.install-line .copy-btn.copied { color: var(--ok); border-color: rgba(52,211,153,0.3); }
+
 .install-bar {
   display: flex;
   align-items: center;
@@ -352,11 +385,21 @@ body {
     <div class="install-block">
       <div class="install-bar"><div class="install-dot"></div><div class="install-dot"></div><div class="install-dot"></div></div>
       <div class="install-body">
-        <span class="comment"># install</span><br>
-        <span class="p">$</span> <span class="c">/plugin marketplace add</span> <span class="u">crimeacs/website-conversion-audit</span><br>
-        <span class="p">$</span> <span class="c">/plugin install</span> <span class="u">website-conversion-audit</span><br><br>
-        <span class="comment"># run</span><br>
-        <span class="p">$</span> <span class="c">/website-conversion-audit</span> <span class="u">https://yoursite.com</span>
+        <span class="comment"># install (click to copy)</span>
+        <div class="install-line" onclick="copyCmd(this, '/plugin marketplace add crimeacs/website-conversion-audit')">
+          <span><span class="p">$</span> <span class="c">/plugin marketplace add</span> <span class="u">crimeacs/website-conversion-audit</span></span>
+          <span class="copy-btn">copy</span>
+        </div>
+        <div class="install-line" onclick="copyCmd(this, '/plugin install website-conversion-audit')">
+          <span><span class="p">$</span> <span class="c">/plugin install</span> <span class="u">website-conversion-audit</span></span>
+          <span class="copy-btn">copy</span>
+        </div>
+        <br>
+        <span class="comment"># run</span>
+        <div class="install-line" onclick="copyCmd(this, '/website-conversion-audit https://yoursite.com')">
+          <span><span class="p">$</span> <span class="c">/website-conversion-audit</span> <span class="u">https://yoursite.com</span></span>
+          <span class="copy-btn">copy</span>
+        </div>
       </div>
     </div>
   </div>
@@ -490,5 +533,18 @@ body {
 
 </div>
 
+<script>
+function copyCmd(el, text) {
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = el.querySelector('.copy-btn');
+    btn.textContent = 'copied!';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = 'copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
 </body>
 </html>
