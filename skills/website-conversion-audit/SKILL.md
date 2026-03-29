@@ -248,3 +248,4 @@ Grade scale: A (85+), B (70-84), C (55-69), D (40-54), F (<40)
 - **Check cross-page patterns.** Many conversion killers are systemic (template duplication) not page-specific.
 - **For sites with >30 pages**, audit a representative sample: homepage + top landing pages + one page per template type.
 - **This is a diagnostic, not a monitor.** Run once, fix issues, re-run to verify.
+- **Version:** 1.0.1
