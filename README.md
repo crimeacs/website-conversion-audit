@@ -1,93 +1,85 @@
 # Website Conversion Audit
 
-**Find why your website gets traffic but no leads.**
+Find why your site gets traffic but no leads.
 
-A Claude Code skill that crawls your live site and runs automated conversion diagnostics. It finds the revenue-killing problems that SEO tools miss: broken CTA buttons, dead forms, missing tracking pixels, copy-pasted meta tags, and mobile UX gaps.
-
-## The problem this solves
-
-SEO tools tell you about meta tags, Core Web Vitals, and schema markup. But they don't tell you:
-
-- That 9 out of 13 pages have CTA buttons pointing to non-existent elements (so clicking "Book now" does nothing)
-- That your Florida tour page has Rhode Island's description because it was copy-pasted during page duplication
-- That you have zero tracking pixels installed (so every visitor is lost forever)
-- That the only contact form is buried at 55% of the page and your audience is 87% mobile from Instagram
-- That your English homepage shows Russian OG tags when shared on social media
-
-This skill finds all of that.
+```
+/website-conversion-audit https://yoursite.com
+```
 
 ## Install
-
-### Via Claude Code plugin marketplace
 
 ```bash
 /plugin marketplace add crimeacs/website-conversion-audit
 /plugin install website-conversion-audit
 ```
 
-### Manual install
+<details>
+<summary>Or install manually (one command)</summary>
 
 ```bash
-mkdir -p ~/.claude/skills/website-conversion-audit
-curl -o ~/.claude/skills/website-conversion-audit/SKILL.md \
-  https://raw.githubusercontent.com/crimeacs/website-conversion-audit/main/skills/website-conversion-audit/SKILL.md
+mkdir -p ~/.claude/skills/website-conversion-audit && curl -sL -o ~/.claude/skills/website-conversion-audit/SKILL.md https://raw.githubusercontent.com/crimeacs/website-conversion-audit/main/skills/website-conversion-audit/SKILL.md
+```
+</details>
+
+## What it finds that SEO tools don't
+
+This skill crawls your live site and checks the things that actually lose you money:
+
+- **Broken CTA buttons** — "Book Now" links pointing to elements that don't exist (from template duplication)
+- **Forms nobody reaches** — 7-field form buried at 60% of the page, 87% mobile audience
+- **Zero tracking** — no Meta Pixel, no conversion events, every visitor lost forever
+- **Copy-paste meta disasters** — Florida page showing Rhode Island's description in social shares
+- **Dead mobile experience** — WhatsApp link only in the footer, no floating contact button
+
+It also covers the basics (titles, OG tags, schema, sitemap, indexing) but the conversion layer is why this exists.
+
+## Sample output
+
+```
+EXECUTIVE SUMMARY
+
+  Your #1 problem: 9 of 13 tour pages have broken "Book Now" buttons.
+  The buttons link to #rec1055702941 which doesn't exist on those pages.
+  Users click, nothing happens. This explains 0.22% conversion on 452 sessions.
+
+  Fix in 10 minutes: In your CMS, update the button link on each page
+  to point to that page's own form block.
+
+  Overall conversion health: 31/100 (F)
+
+FIX-IT CHECKLIST
+
+  - [ ] CRITICAL: Fix CTA anchors on 9 pages (broken #rec links)
+  - [ ] HIGH: Add floating WhatsApp button (no sticky contact on any page)
+  - [ ] HIGH: Install Meta Pixel (zero retargeting capability)
+  - [ ] HIGH: Simplify forms from 7 fields to 2-3
+  - [ ] MEDIUM: Fix OG descriptions (3 pages show wrong tour)
+  - [ ] MEDIUM: Add og:locale, og:site_name, twitter:card to all pages
 ```
 
-## Usage
+## How it works
 
-```
-/website-conversion-audit https://yoursite.com
-```
+7 modules run against every page in your sitemap:
 
-Or just describe what you need:
+| # | Module | Key checks |
+|---|--------|-----------|
+| 1 | Crawl & Map | Sitemap, dead pages, redirects, duplicate titles |
+| 2 | **CTA & Funnel** | Broken anchor links, CTA position, form fields, submit copy |
+| 3 | **Mobile Contact** | Floating buttons, contact in footer only, messenger consistency |
+| 4 | **Tracking** | Meta Pixel, GA4, GTM, conversion events, UTM params |
+| 5 | **Social Sharing** | OG tags, cross-page copy-paste, Facebook scraper test |
+| 6 | Meta & Content | Duplicate titles/descriptions, stale dates, language mismatches |
+| 7 | Search Context | Indexing gap, GSC verification, branded search |
 
-```
-Audit my website for conversion problems: https://yoursite.com
-```
+No API keys needed. Works with any public website.
 
-## What it checks
+## Origin story
 
-| Module | What it finds |
-|--------|--------------|
-| **CTA & Funnel Integrity** | Broken anchor links, dead buttons, CTA positions, form field count, submit button copy |
-| **Mobile Contact Flow** | Missing floating WhatsApp/phone buttons, contact options only in footer, inconsistent messenger handles |
-| **Tracking & Analytics** | Missing Meta Pixel, GA4, GTM, TikTok Pixel; no conversion events; no UTM parameters on social links |
-| **Social Sharing (OG Tags)** | Copy-pasted descriptions from wrong pages, markdown artifacts in titles, language mismatches, missing image dimensions |
-| **Meta & Content Quality** | Duplicate titles/descriptions across pages, stale dates, wrong-language meta, template duplication artifacts |
-| **Site Structure** | Dead pages in sitemap, redirect chains, orphan pages |
-| **Search Context** | Indexing gap, branded search presence, Search Console setup |
+Built from a real audit where a tour company had 452 monthly sessions but only 1 lead. We discovered 9 of 13 pages had broken CTA buttons from template duplication, zero tracking pixels, and copy-pasted descriptions from the wrong pages. The methodology was generalized into this skill.
 
-## What makes this different from SEO audit skills
+## Contributing
 
-| Feature | SEO skills | This skill |
-|---------|-----------|------------|
-| Meta tags & schema | Yes | Yes (baseline) |
-| Core Web Vitals | Yes | Basic |
-| **Broken CTA anchor detection** | No | **Yes** |
-| **Form position & field analysis** | No | **Yes** |
-| **Cross-page OG copy-paste detection** | No | **Yes** |
-| **Tracking pixel verification** | No | **Yes** |
-| **Mobile contact flow audit** | No | **Yes** |
-| **UTM discipline check** | No | **Yes** |
-| **Social scraper simulation** | No | **Yes** |
-| **Template duplication artifact detection** | No | **Yes** |
-
-## Output
-
-The audit produces:
-- Executive summary with the #1 revenue killer and a quick win
-- Detailed findings with severity (CRITICAL/HIGH/MEDIUM/LOW), evidence, revenue impact, and fix steps
-- Priority matrix (effort vs impact)
-- Scorecard with grades per module
-
-## Requirements
-
-- Claude Code (CLI, desktop app, or IDE extension)
-- No API keys needed — works with any public website using only `curl`, `WebFetch`, and `WebSearch`
-
-## Origin
-
-Built from a real audit of a tour company website that had 452 monthly sessions but only 1 lead (0.22% conversion). The audit discovered 9 of 13 tour pages had broken CTA buttons from template duplication, zero tracking pixels, and copy-pasted meta descriptions from wrong pages. The conversion methodology was then generalized into this reusable skill.
+Found a conversion pattern this skill should catch? [Open an issue](../../issues/new/choose) or PR against `SKILL.md`. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
