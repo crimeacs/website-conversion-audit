@@ -126,38 +126,50 @@ body {
   margin: 0 auto;
 }
 
-.install-line {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 12px;
-  border-radius: 6px;
-  margin: 4px 0;
+.install-clickable {
   cursor: pointer;
-  transition: background 0.15s;
-  position: relative;
+  transition: all 0.2s;
 }
 
-.install-line:hover {
-  background: rgba(108,138,255,0.06);
+.install-clickable:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 30px rgba(108,138,255,0.1);
 }
 
-.install-line .copy-btn {
-  opacity: 0;
-  flex-shrink: 0;
-  padding: 3px 10px;
+.install-clickable.copied {
+  border-color: var(--ok);
+  box-shadow: 0 0 30px rgba(52,211,153,0.1);
+}
+
+.install-bar-label {
   font-family: var(--mono);
   font-size: 10px;
-  color: var(--dim);
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.15s;
+  color: var(--muted);
+  margin-left: auto;
 }
 
-.install-line:hover .copy-btn { opacity: 1; }
-.install-line .copy-btn.copied { color: var(--ok); border-color: rgba(52,211,153,0.3); }
+.install-cta {
+  padding: 12px 20px;
+  background: var(--accent);
+  text-align: center;
+  transition: background 0.2s;
+}
+
+.install-clickable:hover .install-cta {
+  background: var(--accent-bright);
+}
+
+.install-clickable.copied .install-cta {
+  background: var(--ok);
+}
+
+.install-cta-text {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.3px;
+}
 
 .install-bar {
   display: flex;
@@ -418,24 +430,19 @@ body {
     <div class="hero-badge">Claude Code Skill</div>
     <h1>Website Conversion <em>Audit</em></h1>
     <p>Find broken CTAs, dead forms, missing pixels, and every reason your site loses leads. One command.</p>
-    <div class="install-block">
-      <div class="install-bar"><div class="install-dot"></div><div class="install-dot"></div><div class="install-dot"></div></div>
+    <div class="install-block install-clickable" onclick="copyAll(this)">
+      <div class="install-bar">
+        <div class="install-dot"></div><div class="install-dot"></div><div class="install-dot"></div>
+        <span class="install-bar-label">click anywhere to copy all 3 commands</span>
+      </div>
       <div class="install-body">
-        <span class="comment"># install (click to copy)</span>
-        <div class="install-line" onclick="copyCmd(this, '/plugin marketplace add crimeacs/website-conversion-audit')">
-          <span><span class="p">$</span> <span class="c">/plugin marketplace add</span> <span class="u">crimeacs/website-conversion-audit</span></span>
-          <span class="copy-btn">copy</span>
-        </div>
-        <div class="install-line" onclick="copyCmd(this, '/plugin install website-conversion-audit')">
-          <span><span class="p">$</span> <span class="c">/plugin install</span> <span class="u">website-conversion-audit</span></span>
-          <span class="copy-btn">copy</span>
-        </div>
-        <br>
-        <span class="comment"># run</span>
-        <div class="install-line" onclick="copyCmd(this, '/website-conversion-audit https://yoursite.com')">
-          <span><span class="p">$</span> <span class="c">/website-conversion-audit</span> <span class="u">https://yoursite.com</span></span>
-          <span class="copy-btn">copy</span>
-        </div>
+        <span class="comment"># install + run</span><br>
+        <span class="p">$</span> <span class="c">/plugin marketplace add</span> <span class="u">crimeacs/website-conversion-audit</span><br>
+        <span class="p">$</span> <span class="c">/plugin install</span> <span class="u">website-conversion-audit</span><br>
+        <span class="p">$</span> <span class="c">/website-conversion-audit</span> <span class="u">https://yoursite.com</span>
+      </div>
+      <div class="install-cta">
+        <span class="install-cta-text">Copy to clipboard</span>
       </div>
     </div>
   </div>
@@ -553,7 +560,6 @@ body {
   <div class="cta-section">
     <h2>Try it now</h2>
     <p>No API keys. Works with any public website.</p>
-    <a href="https://github.com/crimeacs/website-conversion-audit" class="cta-primary">Install from GitHub</a>
     <div class="cta-code" onclick="copyCmd(this, '/website-conversion-audit https://yoursite.com')" style="cursor:pointer;position:relative;">
       <span class="p">$</span> <span class="c">/website-conversion-audit</span> <span style="color:#7a7f96;">https://yoursite.com</span>
       <span class="copy-btn" style="opacity:0.5;margin-left:12px;">copy</span>
@@ -573,15 +579,31 @@ body {
 </div>
 
 <script>
+var ALL_CMDS = '/plugin marketplace add crimeacs/website-conversion-audit\n/plugin install website-conversion-audit\n/website-conversion-audit https://yoursite.com';
+
+function copyAll(el) {
+  navigator.clipboard.writeText(ALL_CMDS).then(function() {
+    el.classList.add('copied');
+    var txt = el.querySelector('.install-cta-text');
+    txt.textContent = 'Copied all 3 commands!';
+    setTimeout(function() {
+      el.classList.remove('copied');
+      txt.textContent = 'Copy to clipboard';
+    }, 3000);
+  });
+}
+
 function copyCmd(el, text) {
   navigator.clipboard.writeText(text).then(function() {
     var btn = el.querySelector('.copy-btn');
-    btn.textContent = 'copied!';
-    btn.classList.add('copied');
-    setTimeout(function() {
-      btn.textContent = 'copy';
-      btn.classList.remove('copied');
-    }, 2000);
+    if (btn) {
+      btn.textContent = 'copied!';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = 'copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    }
   });
 }
 </script>
