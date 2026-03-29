@@ -198,34 +198,34 @@ This module provides context but is NOT the focus. The conversion modules (2-5) 
 
 ---
 
+## Execution Strategy
+
+**Run all modules in parallel where possible.** Use multiple agents or parallel tool calls:
+- Fetch ALL pages from the sitemap simultaneously (Module 1)
+- Run Modules 2-6 in parallel across the fetched HTML (they're independent)
+- Module 7 (search) can run in parallel too
+
+**For sites with >30 pages**, crawl: homepage + all sitemap URLs up to 30 + any pages linked from homepage not in sitemap.
+
+**Time target:** A full audit should take 2-5 minutes, not 20. Parallelize aggressively.
+
+---
+
 ## Report Format
 
-### Executive Summary
+The report MUST follow this exact structure. Do not skip sections.
 
-Start with 3 bullets:
-- **The #1 revenue killer** found (with evidence)
-- **Quick win** that can be fixed in <1 hour
-- **Overall conversion health** (0-100 score)
+### 1. Executive Summary (read this first)
 
-### Findings by Module
+Lead with the single most impactful finding, written for a non-technical business owner:
 
-Each finding includes:
-- **Severity:** CRITICAL / HIGH / MEDIUM / LOW
-- **Issue:** What's wrong (one sentence)
-- **Evidence:** Specific pages, elements, code snippets
-- **Revenue impact:** Why this costs money
-- **Fix:** Exact steps to resolve
+> **Your #1 problem:** [specific issue] on [which pages]. This means [what happens to users]. Estimated impact: [X% of visitors can't convert / all social shares look broken / etc.].
+>
+> **Fix in 10 minutes:** [simplest highest-impact fix with exact steps].
+>
+> **Overall conversion health: X/100 (Grade)**
 
-### Priority Matrix
-
-```
-                    Quick Fix         Needs Dev/CMS        Heavy Lift
-Critical Impact     FIX TODAY         THIS WEEK            PLAN IT
-High Impact         FIX TODAY         NEXT SPRINT          BACKLOG
-Medium Impact       BATCH IT          BACKLOG              SKIP
-```
-
-### Scorecard
+### 2. Scorecard
 
 | Module | Score | Grade | Top Issue |
 |--------|-------|-------|-----------|
@@ -235,9 +235,49 @@ Medium Impact       BATCH IT          BACKLOG              SKIP
 | Social/OG | /100 | A-F | ... |
 | Meta & Content | /100 | A-F | ... |
 | Search Context | /100 | A-F | ... |
-| **Overall** | **/100** | **A-F** | **...** |
+| **Overall** | **/100** | **A-F** | |
 
 Grade scale: A (85+), B (70-84), C (55-69), D (40-54), F (<40)
+
+**Scoring rules:**
+- CTA & Funnel: Start at 100. -25 per broken CTA anchor. -15 if first CTA >50% on any landing page. -10 per form with >4 fields. -5 if submit button is generic.
+- Mobile Contact: Start at 100. -30 if no floating/sticky contact. -20 if contact only in footer. -10 per inconsistent messenger handle.
+- Tracking: Start at 0. +25 per installed pixel (GA4, Meta, GTM, etc). +25 if conversion events found. Cap at 100.
+- Social/OG: Start at 100. -20 per page with no og:image. -15 per copy-pasted wrong description. -10 if no og:locale/site_name. -10 if no twitter card. -10 per markdown artifact in title. -10 if og:image URL is relative not absolute.
+- Meta & Content: Start at 100. -5 per page missing title. -5 per page missing description. -10 per duplicate title/description pair. -10 if no html lang. -5 per page missing H1. -5 if no Schema.org.
+- Search Context: Start at 100. -30 if no GSC verification. -20 if <50% pages indexed. -10 if no llms.txt.
+
+### 3. Fix-It Checklist (THE MOST IMPORTANT SECTION)
+
+Group ALL findings into a single prioritized action list. Every item must have:
+- [ ] **[SEVERITY]** Short description — which page(s) — exact fix steps
+
+Order: CRITICAL first, then HIGH, then MEDIUM. Within each severity, order by effort (quickest fix first).
+
+Example format:
+```
+- [ ] **CRITICAL** Fix broken CTA on /tour-page — button links to #rec123 but that element doesn't exist. In CMS, change button link from #rec123 to #rec456 (the form block on this page).
+- [ ] **HIGH** Add floating WhatsApp button — no sticky contact on any page. Add a fixed-position button in site footer/header code linking to wa.me/YOURNUMBER.
+- [ ] **HIGH** Install Meta Pixel — zero retargeting capability. Add fbq() script in site header, get pixel ID from Meta Business Suite.
+```
+
+### 4. Detailed Findings (by module)
+
+For each module, show:
+- What was checked
+- What was found (with evidence: URLs, code snippets, numbers)
+- Why it matters for revenue
+
+Keep this section factual and evidence-heavy. The interpretation and action items belong in the Fix-It Checklist above.
+
+### 5. Page-by-Page Matrix (appendix)
+
+A single table showing every page and its status across all modules:
+
+| Page | CTAs | Form | Contact | Pixels | OG | Title | Desc | H1 | Schema |
+|------|------|------|---------|--------|-----|-------|------|----|--------|
+| / | 4 OK | 7 fields @51% | phone,email | GA4 | partial | OK | long | no | yes |
+| /about | ... | ... | ... | ... | ... | ... | ... | ... | ... |
 
 ---
 
@@ -246,6 +286,7 @@ Grade scale: A (85+), B (70-84), C (55-69), D (40-54), F (<40)
 - **Crawl the LIVE site.** What the browser renders is what matters, not what the CMS says.
 - **Module 2 (CTA & Funnel) is the highest-value module.** Spend the most time here. A single broken CTA button on a high-traffic page can explain months of zero conversions.
 - **Check cross-page patterns.** Many conversion killers are systemic (template duplication) not page-specific.
-- **For sites with >30 pages**, audit a representative sample: homepage + top landing pages + one page per template type.
+- **OG image URLs must be absolute** (starting with https://). Relative paths like `/images/photo.jpg` break social sharing previews on Facebook, Instagram, Telegram, WhatsApp. This is a CRITICAL finding if detected.
+- **The Fix-It Checklist is what the user actually needs.** Everything else is evidence supporting those action items. If your report has great analysis but a weak checklist, the audit failed.
 - **This is a diagnostic, not a monitor.** Run once, fix issues, re-run to verify.
-- **Version:** 1.0.1
+- **Version:** 1.1.0
