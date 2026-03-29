@@ -25,43 +25,48 @@ body {
   border-radius: 20px;
   overflow: hidden;
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  padding: 48px 52px;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Ambient glows */
 .card::before {
   content: '';
   position: absolute;
-  top: -80px;
-  left: -80px;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(255,59,92,0.12) 0%, transparent 65%);
+  top: -60px;
+  left: -40px;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(244,63,94,0.1) 0%, transparent 65%);
   pointer-events: none;
-  z-index: 0;
 }
 
 .card::after {
   content: '';
   position: absolute;
-  bottom: -120px;
-  right: -60px;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(108,138,255,0.08) 0%, transparent 65%);
+  bottom: -80px;
+  right: 200px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 65%);
   pointer-events: none;
-  z-index: 0;
 }
 
-/* ─── LEFT SIDE ─── */
-.left {
-  padding: 52px 48px;
+/* ─── TOP ROW: badge + title + tagline ─── */
+.top {
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: 48px;
   position: relative;
   z-index: 1;
+  flex: 1;
+}
+
+.top-left {
+  flex-shrink: 0;
+  max-width: 400px;
 }
 
 .badge {
@@ -69,145 +74,110 @@ body {
   align-items: center;
   gap: 7px;
   padding: 5px 12px;
-  background: rgba(108,138,255,0.1);
-  border: 1px solid rgba(108,138,255,0.2);
+  background: rgba(99,102,241,0.1);
+  border: 1px solid rgba(99,102,241,0.2);
   border-radius: 100px;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 10px;
   font-weight: 600;
-  color: #8ba4ff;
+  color: #818cf8;
   letter-spacing: 1px;
   text-transform: uppercase;
-  width: fit-content;
+  margin-bottom: 20px;
 }
 
 .badge::before {
   content: '';
   width: 5px;
   height: 5px;
-  background: #6c8aff;
+  background: #6366f1;
   border-radius: 50%;
 }
 
-.title-block {
-  margin-top: 24px;
-}
-
 h1 {
-  font-size: 44px;
+  font-size: 46px;
   font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -1.5px;
+  line-height: 1.06;
+  letter-spacing: -1.8px;
   color: #e2e4ed;
+  margin-bottom: 16px;
 }
 
 h1 em {
   font-style: normal;
-  background: linear-gradient(135deg, #ff3b5c, #ff8a2b);
+  background: linear-gradient(135deg, #f43f5e, #f59e0b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .tagline {
-  font-size: 16px;
-  color: #7a7f96;
-  margin-top: 14px;
-  line-height: 1.5;
-  max-width: 420px;
+  font-size: 15px;
+  color: #6d7290;
+  line-height: 1.55;
 }
 
-.terminal {
-  background: #0f1117;
-  border: 1px solid #1e2130;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-top: auto;
-}
-
-.terminal-bar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  background: #161922;
-  border-bottom: 1px solid #1e2130;
-}
-
-.dot { width: 8px; height: 8px; border-radius: 50%; }
-.dot:nth-child(1) { background: #ff5f57; }
-.dot:nth-child(2) { background: #ffbd2e; }
-.dot:nth-child(3) { background: #28c840; }
-
-.terminal-body {
-  padding: 14px 16px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 13px;
-  line-height: 1.7;
-}
-
-.prompt { color: #34d399; }
-.cmd { color: #8ba4ff; }
-.url { color: #7a7f96; }
-
-/* ─── RIGHT SIDE ─── */
-.right {
-  padding: 44px 44px 44px 20px;
+/* ─── FINDINGS (right side of top) ─── */
+.findings {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  position: relative;
-  z-index: 1;
+  gap: 8px;
+  max-width: 520px;
 }
 
 .finding {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
-  padding: 14px 16px;
+  padding: 12px 16px;
   border-radius: 10px;
   border: 1px solid;
+  position: relative;
+}
+
+/* Left severity bar */
+.finding::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 2px;
 }
 
 .finding.crit {
-  background: rgba(255,59,92,0.06);
-  border-color: rgba(255,59,92,0.2);
+  background: rgba(244,63,94,0.05);
+  border-color: rgba(244,63,94,0.15);
 }
+.finding.crit::before { background: #f43f5e; }
 
 .finding.high {
-  background: rgba(255,138,43,0.06);
-  border-color: rgba(255,138,43,0.18);
+  background: rgba(245,158,11,0.04);
+  border-color: rgba(245,158,11,0.12);
 }
+.finding.high::before { background: #f59e0b; }
 
 .finding.med {
-  background: rgba(240,198,64,0.05);
-  border-color: rgba(240,198,64,0.15);
+  background: rgba(234,179,8,0.03);
+  border-color: rgba(234,179,8,0.1);
 }
-
-.finding.ok {
-  background: rgba(52,211,153,0.05);
-  border-color: rgba(52,211,153,0.15);
-}
+.finding.med::before { background: #eab308; }
 
 .finding-icon {
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+  font-size: 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.04);
 }
 
-.finding.crit .finding-icon { background: rgba(255,59,92,0.15); }
-.finding.high .finding-icon { background: rgba(255,138,43,0.15); }
-.finding.med .finding-icon { background: rgba(240,198,64,0.12); }
-.finding.ok .finding-icon { background: rgba(52,211,153,0.12); }
-
-.finding-text {
-  flex: 1;
-  min-width: 0;
-}
+.finding-text { flex: 1; min-width: 0; }
 
 .finding-label {
   font-family: 'IBM Plex Mono', monospace;
@@ -215,13 +185,12 @@ h1 em {
   font-weight: 700;
   letter-spacing: 0.8px;
   text-transform: uppercase;
-  margin-bottom: 3px;
+  margin-bottom: 2px;
 }
 
-.finding.crit .finding-label { color: #ff3b5c; }
-.finding.high .finding-label { color: #ff8a2b; }
-.finding.med .finding-label { color: #f0c640; }
-.finding.ok .finding-label { color: #34d399; }
+.finding.crit .finding-label { color: #f43f5e; }
+.finding.high .finding-label { color: #f59e0b; }
+.finding.med .finding-label { color: #eab308; }
 
 .finding-title {
   font-size: 13px;
@@ -232,55 +201,100 @@ h1 em {
 
 .finding-detail {
   font-size: 11px;
-  color: #7a7f96;
-  margin-top: 2px;
-  line-height: 1.4;
+  color: #6d7290;
+  margin-top: 1px;
 }
 
-.score-strip {
-  margin-top: auto;
+/* ─── BOTTOM ROW: terminal + score ─── */
+.bottom {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+  margin-top: 20px;
+}
+
+.terminal {
+  flex: 1;
+  background: #0c0e16;
+  border: 1px solid #1a1d2b;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.terminal-bar {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #12141e;
+  border-bottom: 1px solid #1a1d2b;
+}
+
+.dot { width: 8px; height: 8px; border-radius: 50%; }
+.dot:nth-child(1) { background: #ff5f57; }
+.dot:nth-child(2) { background: #febc2e; }
+.dot:nth-child(3) { background: #28c840; }
+
+.terminal-body {
   padding: 14px 18px;
-  background: rgba(255,59,92,0.06);
-  border: 1px solid rgba(255,59,92,0.2);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  display: flex;
+  align-items: center;
+}
+
+.prompt { color: #10b981; }
+.cmd { color: #818cf8; }
+.url { color: #6d7290; }
+
+.score-strip {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+  background: rgba(244,63,94,0.05);
+  border: 1px solid rgba(244,63,94,0.18);
   border-radius: 10px;
+  min-width: 340px;
 }
 
 .score-number {
-  font-size: 38px;
+  font-size: 42px;
   font-weight: 800;
-  color: #ff3b5c;
+  color: #f43f5e;
   line-height: 1;
+  letter-spacing: -1px;
 }
 
 .score-number span {
-  font-size: 16px;
-  color: #4a4f66;
+  font-size: 18px;
+  color: #3d4160;
   font-weight: 400;
 }
 
-.score-meta {
-  flex: 1;
-}
+.score-meta { flex: 1; }
 
 .score-meta-title {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: #e2e4ed;
 }
 
 .score-meta-sub {
   font-size: 11px;
-  color: #7a7f96;
-  margin-top: 2px;
+  color: #6d7290;
+  margin-top: 3px;
 }
 
 .score-bars {
   display: flex;
-  gap: 4px;
-  margin-top: 6px;
+  gap: 3px;
+  margin-top: 8px;
 }
 
 .score-bar {
@@ -293,71 +307,72 @@ h1 em {
 <body>
 
 <div class="card">
-  <div class="left">
-    <div>
+  <div class="top">
+    <div class="top-left">
       <div class="badge">Claude Code Skill</div>
-      <div class="title-block">
-        <h1>Website<br>Conversion<br><em>Audit</em></h1>
-        <p class="tagline">Find broken CTAs, dead forms, missing pixels, and every reason your site loses leads.</p>
-      </div>
+      <h1>Website<br>Conversion<br><em>Audit</em></h1>
+      <p class="tagline">Find broken CTAs, dead forms, missing pixels, and every reason your site loses leads.</p>
     </div>
-    <div class="terminal">
-      <div class="terminal-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-      <div class="terminal-body">
-        <span class="prompt">$</span> <span class="cmd">/website-conversion-audit</span> <span class="url">https://yoursite.com</span>
+
+    <div class="findings">
+      <div class="finding crit">
+        <div class="finding-icon">&#x1F3AF;</div>
+        <div class="finding-text">
+          <div class="finding-label">Critical</div>
+          <div class="finding-title">9/13 pages have broken "Book Now" buttons</div>
+          <div class="finding-detail">CTA anchors point to non-existent elements</div>
+        </div>
+      </div>
+      <div class="finding high">
+        <div class="finding-icon">&#x1F4F1;</div>
+        <div class="finding-text">
+          <div class="finding-label">High</div>
+          <div class="finding-title">No floating contact button</div>
+          <div class="finding-detail">87% mobile — WhatsApp only in footer at 93%</div>
+        </div>
+      </div>
+      <div class="finding high">
+        <div class="finding-icon">&#x1F4CA;</div>
+        <div class="finding-text">
+          <div class="finding-label">High</div>
+          <div class="finding-title">Zero tracking pixels installed</div>
+          <div class="finding-detail">3,381 visitors lost — no Meta Pixel, no retargeting</div>
+        </div>
+      </div>
+      <div class="finding med">
+        <div class="finding-icon">&#x1F517;</div>
+        <div class="finding-text">
+          <div class="finding-label">Medium</div>
+          <div class="finding-title">Copy-pasted OG descriptions</div>
+          <div class="finding-detail">Florida page shows Rhode Island in social shares</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="right">
-    <div class="finding crit">
-      <div class="finding-icon">🎯</div>
-      <div class="finding-text">
-        <div class="finding-label">Critical</div>
-        <div class="finding-title">9/13 pages have broken "Book Now" buttons</div>
-        <div class="finding-detail">CTA anchors point to non-existent elements from template duplication</div>
-      </div>
-    </div>
-    <div class="finding high">
-      <div class="finding-icon">📱</div>
-      <div class="finding-text">
-        <div class="finding-label">High</div>
-        <div class="finding-title">No floating contact button</div>
-        <div class="finding-detail">87% mobile audience — WhatsApp link only in footer at 93%</div>
-      </div>
-    </div>
-    <div class="finding high">
-      <div class="finding-icon">📊</div>
-      <div class="finding-text">
-        <div class="finding-label">High</div>
-        <div class="finding-title">Zero tracking pixels installed</div>
-        <div class="finding-detail">3,381 annual visitors lost — no Meta Pixel, no retargeting</div>
-      </div>
-    </div>
-    <div class="finding med">
-      <div class="finding-icon">🔗</div>
-      <div class="finding-text">
-        <div class="finding-label">Medium</div>
-        <div class="finding-title">Copy-pasted OG descriptions</div>
-        <div class="finding-detail">Florida tour shows Rhode Island's description in social shares</div>
+  <div class="bottom">
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <div class="terminal-body">
+        <span class="prompt">$</span>&nbsp;<span class="cmd">/website-conversion-audit</span>&nbsp;<span class="url">https://yoursite.com</span>
       </div>
     </div>
     <div class="score-strip">
       <div class="score-number">24<span>/100</span></div>
       <div class="score-meta">
         <div class="score-meta-title">Conversion Health</div>
-        <div class="score-meta-sub">6 modules · 31 pages · 14 issues found</div>
+        <div class="score-meta-sub">7 modules &middot; 31 pages &middot; 14 issues</div>
         <div class="score-bars">
-          <div class="score-bar" style="background:#ff3b5c;"></div>
-          <div class="score-bar" style="background:#ff3b5c;"></div>
-          <div class="score-bar" style="background:#ff8a2b;"></div>
-          <div class="score-bar" style="background:#f0c640;"></div>
-          <div class="score-bar" style="background:#f0c640;"></div>
-          <div class="score-bar" style="background:#2a2e42;"></div>
-          <div class="score-bar" style="background:#2a2e42;"></div>
-          <div class="score-bar" style="background:#2a2e42;"></div>
-          <div class="score-bar" style="background:#2a2e42;"></div>
-          <div class="score-bar" style="background:#2a2e42;"></div>
+          <div class="score-bar" style="background:#f43f5e;"></div>
+          <div class="score-bar" style="background:#f43f5e;"></div>
+          <div class="score-bar" style="background:#f59e0b;"></div>
+          <div class="score-bar" style="background:#eab308;"></div>
+          <div class="score-bar" style="background:#eab308;"></div>
+          <div class="score-bar" style="background:#252840;"></div>
+          <div class="score-bar" style="background:#252840;"></div>
+          <div class="score-bar" style="background:#252840;"></div>
+          <div class="score-bar" style="background:#252840;"></div>
+          <div class="score-bar" style="background:#252840;"></div>
         </div>
       </div>
     </div>
