@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Conversion Audit — Claude Code Skill</title>
+<meta name="description" content="Find why your website gets traffic but no leads. A Claude Code skill that detects broken CTAs, dead forms, missing pixels, and mobile UX gaps.">
+<meta property="og:title" content="Website Conversion Audit">
+<meta property="og:description" content="Find broken CTAs, dead forms, missing pixels — the revenue problems SEO tools miss.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://crimeacs.github.io/website-conversion-audit/">
+<meta property="og:image" content="https://crimeacs.github.io/website-conversion-audit/card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Website Conversion Audit">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Website Conversion Audit">
+<meta name="twitter:description" content="Find broken CTAs, dead forms, missing pixels — the revenue problems SEO tools miss.">
+<meta name="twitter:image" content="https://crimeacs.github.io/website-conversion-audit/card.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #08090d;
+  --surface: #0f1117;
+  --surface2: #161922;
+  --border: #1e2130;
+  --text: #e2e4ed;
+  --dim: #7a7f96;
+  --muted: #4a4f66;
+  --critical: #ff3b5c;
+  --high: #ff8a2b;
+  --medium: #f0c640;
+  --ok: #34d399;
+  --accent: #6c8aff;
+  --accent-bright: #8ba4ff;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Outfit', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ─── HERO ─── */
+.hero {
+  padding: 100px 0 80px;
+  text-align: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 14px;
+  background: rgba(108,138,255,0.1);
+  border: 1px solid rgba(108,138,255,0.2);
+  border-radius: 100px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-bright);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.hero h1 {
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  margin-bottom: 20px;
+}
+
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--critical), var(--high));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+  font-size: 19px;
+  color: var(--dim);
+  max-width: 520px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+}
+
+.install-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  text-align: left;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.install-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+}
+
+.install-dot { width: 8px; height: 8px; border-radius: 50%; }
+.install-dot:nth-child(1) { background: #ff5f57; }
+.install-dot:nth-child(2) { background: #ffbd2e; }
+.install-dot:nth-child(3) { background: #28c840; }
+
+.install-body {
+  padding: 18px 20px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 2;
+}
+
+.install-body .p { color: var(--ok); }
+.install-body .c { color: var(--accent-bright); }
+.install-body .u { color: var(--dim); }
+.install-body .comment { color: var(--muted); }
+
+/* ─── SECTION ─── */
+.section {
+  padding: 80px 0;
+  border-top: 1px solid var(--border);
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.section h2 {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 40px;
+}
+
+/* ─── FINDINGS DEMO ─── */
+.findings {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.f {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: 10px;
+  border: 1px solid;
+}
+
+.f.crit { background: rgba(255,59,92,0.05); border-color: rgba(255,59,92,0.18); }
+.f.high { background: rgba(255,138,43,0.04); border-color: rgba(255,138,43,0.15); }
+.f.med  { background: rgba(240,198,64,0.04); border-color: rgba(240,198,64,0.12); }
+
+.f-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+}
+
+.f.crit .f-icon { background: rgba(255,59,92,0.12); }
+.f.high .f-icon { background: rgba(255,138,43,0.12); }
+.f.med .f-icon  { background: rgba(240,198,64,0.1); }
+
+.f-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.f.crit .f-tag { color: var(--critical); }
+.f.high .f-tag { color: var(--high); }
+.f.med .f-tag  { color: var(--medium); }
+
+.f-title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+
+.f-detail {
+  font-size: 13px;
+  color: var(--dim);
+  line-height: 1.4;
+}
+
+/* ─── MODULES ─── */
+.modules {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.mod {
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.mod.core {
+  border-color: rgba(255,59,92,0.2);
+  background: rgba(255,59,92,0.03);
+}
+
+.mod-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.mod-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+
+.mod-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.mod.core .mod-name { color: var(--critical); }
+
+.mod-desc {
+  font-size: 12px;
+  color: var(--dim);
+  line-height: 1.4;
+}
+
+/* ─── CTA ─── */
+.cta-section {
+  padding: 80px 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.cta-section h2 {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
+}
+
+.cta-section p {
+  color: var(--dim);
+  margin-bottom: 32px;
+  font-size: 16px;
+}
+
+.cta-code {
+  display: inline-block;
+  padding: 16px 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--mono);
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.cta-code .p { color: var(--ok); }
+.cta-code .c { color: var(--accent-bright); }
+
+.cta-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.cta-links a {
+  color: var(--dim);
+  text-decoration: none;
+  font-size: 14px;
+  font-family: var(--mono);
+  padding: 10px 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.cta-links a:hover {
+  color: var(--text);
+  border-color: var(--accent);
+  background: rgba(108,138,255,0.05);
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  padding: 40px 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  font-family: var(--mono);
+}
+
+.footer a { color: var(--dim); text-decoration: none; }
+.footer a:hover { color: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-badge">Claude Code Skill</div>
+    <h1>Website Conversion <em>Audit</em></h1>
+    <p>Find broken CTAs, dead forms, missing pixels, and every reason your site loses leads. One command.</p>
+    <div class="install-block">
+      <div class="install-bar"><div class="install-dot"></div><div class="install-dot"></div><div class="install-dot"></div></div>
+      <div class="install-body">
+        <span class="comment"># install</span><br>
+        <span class="p">$</span> <span class="c">/plugin marketplace add</span> <span class="u">crimeacs/website-conversion-audit</span><br>
+        <span class="p">$</span> <span class="c">/plugin install</span> <span class="u">website-conversion-audit</span><br><br>
+        <span class="comment"># run</span><br>
+        <span class="p">$</span> <span class="c">/website-conversion-audit</span> <span class="u">https://yoursite.com</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">What it finds</div>
+    <h2>The revenue problems SEO tools miss</h2>
+    <div class="findings">
+      <div class="f crit">
+        <div class="f-icon">🎯</div>
+        <div>
+          <div class="f-tag">Critical</div>
+          <div class="f-title">Broken "Book Now" buttons on 9/13 pages</div>
+          <div class="f-detail">CTA anchor links pointing to elements that don't exist — from template duplication. Users click, nothing happens.</div>
+        </div>
+      </div>
+      <div class="f high">
+        <div class="f-icon">📱</div>
+        <div>
+          <div class="f-tag">High</div>
+          <div class="f-title">No floating contact on mobile</div>
+          <div class="f-detail">87% mobile audience from Instagram. WhatsApp link buried in footer at 93% of page depth.</div>
+        </div>
+      </div>
+      <div class="f high">
+        <div class="f-icon">📊</div>
+        <div>
+          <div class="f-tag">High</div>
+          <div class="f-title">Zero tracking pixels installed</div>
+          <div class="f-detail">No Meta Pixel, no conversion events. 3,381 annual visitors — all lost, no retargeting possible.</div>
+        </div>
+      </div>
+      <div class="f med">
+        <div class="f-icon">🔗</div>
+        <div>
+          <div class="f-tag">Medium</div>
+          <div class="f-title">Florida tour shows Rhode Island's description</div>
+          <div class="f-detail">Copy-pasted OG meta during page duplication. Social shares show wrong content.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">How it works</div>
+    <h2>7 modules, every page, one command</h2>
+    <div class="modules">
+      <div class="mod">
+        <div class="mod-icon">🔍</div>
+        <div>
+          <div class="mod-num">01</div>
+          <div class="mod-name">Crawl & Map</div>
+          <div class="mod-desc">Sitemap, dead pages, redirects, duplicate titles</div>
+        </div>
+      </div>
+      <div class="mod core">
+        <div class="mod-icon">🎯</div>
+        <div>
+          <div class="mod-num">02</div>
+          <div class="mod-name">CTA & Funnel</div>
+          <div class="mod-desc">Broken anchor links, CTA position, form fields, submit copy</div>
+        </div>
+      </div>
+      <div class="mod core">
+        <div class="mod-icon">📱</div>
+        <div>
+          <div class="mod-num">03</div>
+          <div class="mod-name">Mobile Contact</div>
+          <div class="mod-desc">Floating buttons, footer-only contact, messenger consistency</div>
+        </div>
+      </div>
+      <div class="mod core">
+        <div class="mod-icon">📊</div>
+        <div>
+          <div class="mod-num">04</div>
+          <div class="mod-name">Tracking</div>
+          <div class="mod-desc">Meta Pixel, GA4, GTM, conversion events, UTM params</div>
+        </div>
+      </div>
+      <div class="mod">
+        <div class="mod-icon">🔗</div>
+        <div>
+          <div class="mod-num">05</div>
+          <div class="mod-name">Social Sharing</div>
+          <div class="mod-desc">OG tags, cross-page copy-paste, Facebook scraper test</div>
+        </div>
+      </div>
+      <div class="mod">
+        <div class="mod-icon">📝</div>
+        <div>
+          <div class="mod-num">06</div>
+          <div class="mod-name">Meta & Content</div>
+          <div class="mod-desc">Duplicate titles/descriptions, stale dates, language mix</div>
+        </div>
+      </div>
+      <div class="mod">
+        <div class="mod-icon">🌐</div>
+        <div>
+          <div class="mod-num">07</div>
+          <div class="mod-name">Search Context</div>
+          <div class="mod-desc">Indexing gap, GSC verification, branded search</div>
+        </div>
+      </div>
+      <div class="mod" style="border-style:dashed;opacity:0.6;">
+        <div class="mod-icon">⚡</div>
+        <div>
+          <div class="mod-num">output</div>
+          <div class="mod-name">Fix-It Checklist</div>
+          <div class="mod-desc">Prioritized action items — CRITICAL first, quick fixes first</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <h2>Try it now</h2>
+    <p>No API keys. Works with any public website.</p>
+    <div class="cta-code">
+      <span class="p">$</span> <span class="c">/website-conversion-audit</span> <span style="color:#7a7f96;">https://yoursite.com</span>
+    </div>
+    <div class="cta-links">
+      <a href="https://github.com/crimeacs/website-conversion-audit">GitHub</a>
+      <a href="https://github.com/crimeacs/website-conversion-audit/blob/main/skills/website-conversion-audit/SKILL.md">View SKILL.md</a>
+      <a href="https://github.com/crimeacs/website-conversion-audit/blob/main/CONTRIBUTING.md">Contribute</a>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="https://github.com/crimeacs/website-conversion-audit">crimeacs/website-conversion-audit</a> · Apache 2.0 · Built from a real audit that turned 0.22% into actionable fixes
+  </div>
+
+</div>
+
+</body>
+</html>
