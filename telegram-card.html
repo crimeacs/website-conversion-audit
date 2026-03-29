@@ -25,13 +25,12 @@ body {
   border-radius: 20px;
   overflow: hidden;
   position: relative;
-  padding: 36px 44px;
+  padding: 40px 48px 36px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-/* Ambient glows */
 .card::before {
   content: '';
   position: absolute;
@@ -54,31 +53,30 @@ body {
   pointer-events: none;
 }
 
-/* ─── TOP ROW: badge + title + tagline ─── */
-.top {
+/* ─── TOP: title row ─── */
+.row-top {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
-  gap: 32px;
+  gap: 20px;
   position: relative;
   z-index: 1;
 }
 
-.top-left {
+.title-col {
   flex-shrink: 0;
-  max-width: 400px;
+  width: 340px;
 }
 
 .badge {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 5px 12px;
+  padding: 6px 14px;
   background: rgba(99,102,241,0.1);
   border: 1px solid rgba(99,102,241,0.2);
   border-radius: 100px;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   color: #818cf8;
   letter-spacing: 1px;
@@ -88,17 +86,17 @@ body {
 
 .badge::before {
   content: '';
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   background: #6366f1;
   border-radius: 50%;
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 48px;
   font-weight: 800;
-  line-height: 1.06;
-  letter-spacing: -1.8px;
+  line-height: 1.04;
+  letter-spacing: -2px;
   color: #e2e4ed;
   margin-bottom: 12px;
 }
@@ -111,81 +109,50 @@ h1 em {
 }
 
 .tagline {
-  font-size: 14px;
+  font-size: 16px;
   color: #6d7290;
   line-height: 1.5;
 }
 
-/* ─── FINDINGS (right side of top) ─── */
+/* ─── FINDINGS: 2x2 grid ─── */
 .findings {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  max-width: 540px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
 }
 
 .finding {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  border-radius: 8px;
+  padding: 14px 16px;
+  border-radius: 10px;
   border: 1px solid;
   position: relative;
 }
 
-/* Left severity bar */
 .finding::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 10px;
-  bottom: 10px;
+  top: 12px;
+  bottom: 12px;
   width: 3px;
   border-radius: 2px;
 }
 
-.finding.crit {
-  background: rgba(244,63,94,0.05);
-  border-color: rgba(244,63,94,0.15);
-}
+.finding.crit { background: rgba(244,63,94,0.05); border-color: rgba(244,63,94,0.15); }
 .finding.crit::before { background: #f43f5e; }
-
-.finding.high {
-  background: rgba(245,158,11,0.04);
-  border-color: rgba(245,158,11,0.12);
-}
+.finding.high { background: rgba(245,158,11,0.04); border-color: rgba(245,158,11,0.12); }
 .finding.high::before { background: #f59e0b; }
-
-.finding.med {
-  background: rgba(234,179,8,0.03);
-  border-color: rgba(234,179,8,0.1);
-}
+.finding.med { background: rgba(234,179,8,0.03); border-color: rgba(234,179,8,0.1); }
 .finding.med::before { background: #eab308; }
-
-.finding-icon {
-  flex-shrink: 0;
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.04);
-}
-
-.finding-text { flex: 1; min-width: 0; }
 
 .finding-label {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.8px;
   text-transform: uppercase;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 
 .finding.crit .finding-label { color: #f43f5e; }
@@ -193,26 +160,26 @@ h1 em {
 .finding.med .finding-label { color: #eab308; }
 
 .finding-title {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   color: #e2e4ed;
-  line-height: 1.3;
+  line-height: 1.25;
+  margin-bottom: 3px;
 }
 
 .finding-detail {
-  font-size: 11px;
+  font-size: 12px;
   color: #6d7290;
-  margin-top: 1px;
+  line-height: 1.35;
 }
 
-/* ─── BOTTOM ROW: terminal + score ─── */
-.bottom {
+/* ─── BOTTOM: terminal + score ─── */
+.row-bottom {
   display: flex;
   align-items: stretch;
-  gap: 16px;
+  gap: 14px;
   position: relative;
   z-index: 1;
-  margin-top: 12px;
 }
 
 .terminal {
@@ -221,8 +188,6 @@ h1 em {
   border: 1px solid #1a1d2b;
   border-radius: 10px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
 
 .terminal-bar {
@@ -242,10 +207,7 @@ h1 em {
 .terminal-body {
   padding: 14px 18px;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 13px;
-  line-height: 1.7;
-  display: flex;
-  align-items: center;
+  font-size: 14px;
 }
 
 .prompt { color: #10b981; }
@@ -260,11 +222,11 @@ h1 em {
   background: rgba(244,63,94,0.05);
   border: 1px solid rgba(244,63,94,0.18);
   border-radius: 10px;
-  min-width: 340px;
+  min-width: 320px;
 }
 
 .score-number {
-  font-size: 42px;
+  font-size: 44px;
   font-weight: 800;
   color: #f43f5e;
   line-height: 1;
@@ -277,16 +239,14 @@ h1 em {
   font-weight: 400;
 }
 
-.score-meta { flex: 1; }
-
 .score-meta-title {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: #e2e4ed;
 }
 
 .score-meta-sub {
-  font-size: 11px;
+  font-size: 12px;
   color: #6d7290;
   margin-top: 3px;
 }
@@ -298,7 +258,7 @@ h1 em {
 }
 
 .score-bar {
-  height: 4px;
+  height: 5px;
   border-radius: 2px;
   flex: 1;
 }
@@ -307,8 +267,8 @@ h1 em {
 <body>
 
 <div class="card">
-  <div class="top">
-    <div class="top-left">
+  <div class="row-top">
+    <div class="title-col">
       <div class="badge">Claude Code Skill</div>
       <h1>Website<br>Conversion<br><em>Audit</em></h1>
       <p class="tagline">Find broken CTAs, dead forms, missing pixels, and every reason your site loses leads.</p>
@@ -316,50 +276,38 @@ h1 em {
 
     <div class="findings">
       <div class="finding crit">
-        <div class="finding-icon">&#x1F3AF;</div>
-        <div class="finding-text">
-          <div class="finding-label">Critical</div>
-          <div class="finding-title">9/13 pages have broken "Book Now" buttons</div>
-          <div class="finding-detail">CTA anchors point to non-existent elements</div>
-        </div>
+        <div class="finding-label">Critical</div>
+        <div class="finding-title">9/13 broken "Book Now" buttons</div>
+        <div class="finding-detail">CTA anchors point to non-existent elements</div>
       </div>
       <div class="finding high">
-        <div class="finding-icon">&#x1F4F1;</div>
-        <div class="finding-text">
-          <div class="finding-label">High</div>
-          <div class="finding-title">No floating contact button</div>
-          <div class="finding-detail">87% mobile — WhatsApp only in footer at 93%</div>
-        </div>
+        <div class="finding-label">High</div>
+        <div class="finding-title">No floating contact button</div>
+        <div class="finding-detail">87% mobile, WhatsApp only in footer</div>
       </div>
       <div class="finding high">
-        <div class="finding-icon">&#x1F4CA;</div>
-        <div class="finding-text">
-          <div class="finding-label">High</div>
-          <div class="finding-title">Zero tracking pixels installed</div>
-          <div class="finding-detail">3,381 visitors lost — no Meta Pixel, no retargeting</div>
-        </div>
+        <div class="finding-label">High</div>
+        <div class="finding-title">Zero tracking pixels</div>
+        <div class="finding-detail">3,381 visitors lost, no retargeting</div>
       </div>
       <div class="finding med">
-        <div class="finding-icon">&#x1F517;</div>
-        <div class="finding-text">
-          <div class="finding-label">Medium</div>
-          <div class="finding-title">Copy-pasted OG descriptions</div>
-          <div class="finding-detail">Florida page shows Rhode Island in social shares</div>
-        </div>
+        <div class="finding-label">Medium</div>
+        <div class="finding-title">Wrong OG descriptions</div>
+        <div class="finding-detail">Florida shows Rhode Island in shares</div>
       </div>
     </div>
   </div>
 
-  <div class="bottom">
+  <div class="row-bottom">
     <div class="terminal">
       <div class="terminal-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
       <div class="terminal-body">
-        <span class="prompt">$</span>&nbsp;<span class="cmd">/website-conversion-audit</span>&nbsp;<span class="url">https://yoursite.com</span>
+        <span class="prompt">$</span> <span class="cmd">/website-conversion-audit</span> <span class="url">https://yoursite.com</span>
       </div>
     </div>
     <div class="score-strip">
       <div class="score-number">24<span>/100</span></div>
-      <div class="score-meta">
+      <div>
         <div class="score-meta-title">Conversion Health</div>
         <div class="score-meta-sub">7 modules &middot; 31 pages &middot; 14 issues</div>
         <div class="score-bars">
