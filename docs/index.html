@@ -18,6 +18,22 @@
 <meta name="twitter:title" content="Website Conversion Audit">
 <meta name="twitter:description" content="Find broken CTAs, dead forms, missing pixels — the revenue problems SEO tools miss.">
 <meta name="twitter:image" content="https://crimeacs.github.io/website-conversion-audit/card.png">
+<link rel="canonical" href="https://crimeacs.github.io/website-conversion-audit/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Website Conversion Audit",
+  "description": "A Claude Code skill that finds why websites get traffic but no leads. Detects broken CTAs, dead forms, missing pixels, and mobile UX gaps.",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "url": "https://crimeacs.github.io/website-conversion-audit/",
+  "author": { "@type": "Person", "name": "Artemii Novoselov", "url": "https://github.com/crimeacs" },
+  "license": "https://www.apache.org/licenses/LICENSE-2.0",
+  "codeRepository": "https://github.com/crimeacs/website-conversion-audit"
+}
+</script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
@@ -333,6 +349,26 @@ body {
   margin-bottom: 20px;
 }
 
+.cta-primary {
+  display: inline-block;
+  padding: 14px 36px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: all 0.2s;
+  letter-spacing: -0.3px;
+}
+
+.cta-primary:hover {
+  background: var(--accent-bright);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(108,138,255,0.25);
+}
+
 .cta-code .p { color: var(--ok); }
 .cta-code .c { color: var(--accent-bright); }
 
@@ -517,13 +553,16 @@ body {
   <div class="cta-section">
     <h2>Try it now</h2>
     <p>No API keys. Works with any public website.</p>
-    <div class="cta-code">
+    <a href="https://github.com/crimeacs/website-conversion-audit" class="cta-primary">Install from GitHub</a>
+    <div class="cta-code" onclick="copyCmd(this, '/website-conversion-audit https://yoursite.com')" style="cursor:pointer;position:relative;">
       <span class="p">$</span> <span class="c">/website-conversion-audit</span> <span style="color:#7a7f96;">https://yoursite.com</span>
+      <span class="copy-btn" style="opacity:0.5;margin-left:12px;">copy</span>
     </div>
     <div class="cta-links">
-      <a href="https://github.com/crimeacs/website-conversion-audit">GitHub</a>
       <a href="https://github.com/crimeacs/website-conversion-audit/blob/main/skills/website-conversion-audit/SKILL.md">View SKILL.md</a>
       <a href="https://github.com/crimeacs/website-conversion-audit/blob/main/CONTRIBUTING.md">Contribute</a>
+      <a href="https://github.com/crimeacs/website-conversion-audit/issues/new/choose">Report issue</a>
+      <a href="https://t.me/crimeacs">Contact</a>
     </div>
   </div>
 

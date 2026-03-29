@@ -1,0 +1,25 @@
+# Website Conversion Audit
+
+> A Claude Code skill that finds why websites get traffic but no leads.
+
+Crawls your live site and runs 7 automated diagnostic modules:
+1. Crawl & Map — sitemap, dead pages, redirects
+2. CTA & Funnel — broken anchor links, CTA positions, form fields
+3. Mobile Contact — floating buttons, contact accessibility
+4. Tracking — Meta Pixel, GA4, GTM, conversion events, UTM params
+5. Social Sharing — OG tags, cross-page copy-paste, scraper simulation
+6. Meta & Content — duplicate titles/descriptions, stale dates, language mix
+7. Search Context — indexing gap, GSC, branded search
+
+## Install
+/plugin marketplace add crimeacs/website-conversion-audit
+/plugin install website-conversion-audit
+
+## Run
+/website-conversion-audit https://yoursite.com
+
+## Source
+https://github.com/crimeacs/website-conversion-audit
+
+## License
+Apache 2.0
