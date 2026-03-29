@@ -641,6 +641,152 @@ body::after {
 .footer a { color: var(--dim); text-decoration: none; transition: color 0.2s; }
 .footer a:hover { color: var(--accent-b); }
 
+/* ─── HERO LINKS ─── */
+.hero-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 24px;
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.hero-links a {
+  color: var(--dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.hero-links a:hover { color: var(--text); }
+
+.hero-sep { color: var(--muted); }
+
+.hero-star {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.hero-star:hover {
+  border-color: var(--medium);
+  background: rgba(234,179,8,0.06);
+  color: var(--medium) !important;
+}
+
+/* ─── CONTRIBUTE SECTION ─── */
+.contribute-sub {
+  font-size: 16px;
+  color: var(--dim);
+  max-width: 500px;
+  line-height: 1.6;
+  margin-bottom: 36px;
+}
+
+.gaps {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.gap-title {
+  padding: 14px 22px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--medium);
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+}
+
+.gap-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--dim);
+  line-height: 1.5;
+  transition: background 0.2s;
+}
+
+.gap-item:last-child { border-bottom: none; }
+.gap-item:hover { background: rgba(255,255,255,0.01); }
+
+.gap-item code {
+  font-family: var(--mono);
+  font-size: 12px;
+  background: var(--surface2);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--text);
+}
+
+.gap-tag {
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--accent-g);
+  color: var(--accent-b);
+  border: 1px solid rgba(99,102,241,0.15);
+  margin-top: 2px;
+}
+
+.contribute-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.contrib-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 11px 22px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--dim);
+  transition: all 0.2s;
+  letter-spacing: 0.2px;
+}
+
+.contrib-btn:hover {
+  color: var(--text);
+  border-color: var(--border-b);
+  background: var(--surface);
+  transform: translateY(-1px);
+}
+
+.contrib-btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.contrib-btn.primary:hover {
+  background: var(--accent-b);
+  border-color: var(--accent-b);
+  box-shadow: 0 4px 20px rgba(99,102,241,0.2);
+}
+
 /* ─── RESPONSIVE ─── */
 @media (max-width: 640px) {
   .hero h1 { font-size: 36px; letter-spacing: -1.5px; }
@@ -648,6 +794,9 @@ body::after {
   .modules { grid-template-columns: 1fr; }
   .cta-links { flex-direction: column; align-items: center; }
   .term-body { font-size: 12px; }
+  .hero-links { flex-wrap: wrap; font-size: 12px; }
+  .contribute-actions { flex-direction: column; }
+  .contrib-btn { justify-content: center; }
 }
 </style>
 </head>
@@ -675,6 +824,14 @@ body::after {
       <div class="term-cta">
         <span class="term-cta-text">Copy to clipboard</span>
       </div>
+    </div>
+
+    <div class="hero-links reveal" style="transition-delay:0.45s">
+      <a href="https://github.com/crimeacs/website-conversion-audit" class="hero-gh">GitHub</a>
+      <span class="hero-sep">&middot;</span>
+      <a href="https://t.me/crimeacs" class="hero-contact">Questions? @crimeacs</a>
+      <span class="hero-sep">&middot;</span>
+      <a href="https://github.com/crimeacs/website-conversion-audit/stargazers" class="hero-star" id="star-btn">Star <span id="star-count"></span></a>
     </div>
   </div>
 
@@ -758,19 +915,54 @@ body::after {
     </div>
   </div>
 
-  <!-- BOTTOM CTA -->
+  <!-- HELP BUILD THIS -->
+  <div class="section contribute-section">
+    <div class="section-label reveal">Open source</div>
+    <h2 class="reveal" style="transition-delay:0.05s">This skill improves<br>every time someone runs it</h2>
+    <p class="contribute-sub reveal" style="transition-delay:0.1s">Run it on your site. Find something it missed. Open a PR. That's how this gets better.</p>
+
+    <div class="gaps reveal" style="transition-delay:0.15s">
+      <div class="gap-title">Known gaps — help wanted</div>
+      <div class="gap-item">
+        <span class="gap-tag">detection</span>
+        <span>Popup/modal forms — the skill only finds inline <code>&lt;form&gt;</code> tags, misses JS-triggered modals</span>
+      </div>
+      <div class="gap-item">
+        <span class="gap-tag">detection</span>
+        <span>Chat widgets — detects Intercom/Drift by name but misses custom chat implementations</span>
+      </div>
+      <div class="gap-item">
+        <span class="gap-tag">module</span>
+        <span>Page speed / Core Web Vitals — currently not measured (use Lighthouse for this)</span>
+      </div>
+      <div class="gap-item">
+        <span class="gap-tag">module</span>
+        <span>A/B test detection — some sites have conflicting CTAs from stale experiments</span>
+      </div>
+      <div class="gap-item">
+        <span class="gap-tag">accuracy</span>
+        <span>GA4 false positives — the <code>G-</code> regex can match CSS hex colors in some edge cases</span>
+      </div>
+      <div class="gap-item">
+        <span class="gap-tag">output</span>
+        <span>HTML report export — generate a shareable standalone HTML file from the audit results</span>
+      </div>
+    </div>
+
+    <div class="contribute-actions reveal" style="transition-delay:0.25s">
+      <a href="https://github.com/crimeacs/website-conversion-audit/issues/new?template=missed-finding.md" class="contrib-btn primary">Report a missed finding</a>
+      <a href="https://github.com/crimeacs/website-conversion-audit/blob/main/skills/website-conversion-audit/SKILL.md" class="contrib-btn">Edit SKILL.md</a>
+      <a href="https://github.com/crimeacs/website-conversion-audit/fork" class="contrib-btn">Fork &amp; improve</a>
+    </div>
+  </div>
+
+  <!-- BOTTOM INSTALL -->
   <div class="cta-section">
-    <h2 class="reveal">Try it now</h2>
-    <p class="reveal" style="transition-delay:0.05s">No API keys. Works with any public website.</p>
+    <h2 class="reveal">Try it on your site</h2>
+    <p class="reveal" style="transition-delay:0.05s">No API keys. One command. Every page checked.</p>
     <div class="cta-code reveal" style="transition-delay:0.12s" onclick="copyCmd(this, '/website-conversion-audit https://yoursite.com')">
       <span><span class="p">$</span> <span class="c">/website-conversion-audit</span> <span style="color:var(--dim)">https://yoursite.com</span></span>
       <span class="copy-btn">copy</span>
-    </div>
-    <div class="cta-links reveal" style="transition-delay:0.18s">
-      <a href="https://github.com/crimeacs/website-conversion-audit/blob/main/skills/website-conversion-audit/SKILL.md">View SKILL.md</a>
-      <a href="https://github.com/crimeacs/website-conversion-audit/blob/main/CONTRIBUTING.md">Contribute</a>
-      <a href="https://github.com/crimeacs/website-conversion-audit/issues/new/choose">Report issue</a>
-      <a href="https://t.me/crimeacs">Contact</a>
     </div>
   </div>
 
@@ -793,6 +985,16 @@ var observer = new IntersectionObserver(function(entries) {
 document.querySelectorAll('.reveal').forEach(function(el) {
   observer.observe(el);
 });
+
+/* Fetch GitHub stars */
+fetch('https://api.github.com/repos/crimeacs/website-conversion-audit')
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    var el = document.getElementById('star-count');
+    if (el && d.stargazers_count !== undefined) {
+      el.textContent = d.stargazers_count;
+    }
+  }).catch(function() {});
 
 /* Copy all */
 var ALL_CMDS = '/plugin marketplace add crimeacs/website-conversion-audit\n/plugin install website-conversion-audit\n/website-conversion-audit https://yoursite.com';
